@@ -1,10 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const path = require('path');
-
-dotenv.config();
+require('dotenv').config();
 
 const app = express();
 
@@ -12,30 +10,36 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ MongoDB connection error:', err));
+// Connexion à MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 
-// Test route API simple
-app.get('/api/test', (req, res) => {
-  res.json({ message: '🚀 MERN API is working!' });
+// 👉 Exemple de route test
+app.get('/api/hello', (req, res) => {
+    res.json({ message: 'Hello from the backend!' });
 });
 
-// Serve React frontend static files (build)
+// 👉 Test de connexion MongoDB (optionnel)
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const collections = await mongoose.connection.db.listCollections().toArray();
+    res.json({ success: true, collections: collections.map(c => c.name) });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 👉 Servir le frontend React (production)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Fallback pour React Router - renvoyer index.html pour toute autre route
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start the server
+// 👉 Port d'écoute
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
