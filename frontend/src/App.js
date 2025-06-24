@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="checkpoint-container">
-      <h1>Hello Checkpoint: Hosting a MERN App on Microsoft Azure</h1>
+      <h1>Bienvenue Checkpoint: Hosting a MERN App on Microsoft Azure ! 🎉</h1>
 
       <p>
         💡 <a href="https://www.youtube.com/watch?v=szfjEwF-FKQ" target="_blank" rel="noreferrer">
