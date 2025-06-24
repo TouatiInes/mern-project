@@ -1,0 +1,19 @@
+.checkpoint-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.checkpoint-container h1 {
+  color: blue;
+  font-weight: bold;
+}
+
+.checkpoint-container a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.checkpoint-container a:hover {
+  text-decoration: underline;
+}
